@@ -1,7 +1,9 @@
 export enum CustomerType {
-    REGULAR,
-    GOLD,
-    PLATINUM
+
+    //di deklarasi ke string supaya hasilnya konsisten menggunakan string itu, karna defaultnya menggunakan index
+    REGULAR = "REGULAR",
+    GOLD = "GOLD",
+    PLATINUM = "PLATINUM"
 }
 
 export type Customer = {

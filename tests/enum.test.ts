@@ -6,6 +6,8 @@ describe("Enum", function(){
         const customer: Customer = {
             id: 1,
             name: "Dwi",
+
+            //contoh penggunaan enum
             type: CustomerType.GOLD
         }
 
