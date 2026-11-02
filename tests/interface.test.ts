@@ -1,3 +1,4 @@
+import type { Employee, Manager } from "../src/employee";
 import type { Seller } from "../src/seller"
 
 describe("interface", function() {
@@ -33,5 +34,41 @@ describe("interface", function() {
         }
 
         expect(add(1,2)).toBe(3);
+    })
+
+    //Indexable Interface
+    it("should support indexable interface dictionary", function () {
+        interface StringDictionary {
+            [key: string]: string
+        }
+
+        const dictionary: StringDictionary = {
+            "name": "Eko",
+            "address": "Indonesia"
+        }
+
+        expect(dictionary["name"]).toBe("Eko");
+        expect(dictionary["address"]).toBe("Indonesia");
+    })
+
+
+    //Extending Interface 
+    it("should support extend interface", function () {
+        const employee: Employee = {
+            id: "1",
+            name: "Dwi",
+            division: "IT"
+        }
+
+        console.info(employee);
+
+        const manager: Manager = {
+            id: "2",
+            name: "Premayasa",
+            division: "QA",
+            numberOfEmployees: 10,
+        }
+
+        console.info(manager);
     })
 })
