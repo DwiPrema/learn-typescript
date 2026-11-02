@@ -71,4 +71,26 @@ describe("interface", function() {
 
         console.info(manager);
     })
+
+    //Intersection Types
+    it("should support intersection types", function () {
+        interface HasName {
+            name: string
+        }
+
+        interface HasId {
+            id: string
+        }
+
+        //Intersection Types (Gabungan dari beberapa tipe menjadi satu tipe baru yang memiliki seluruh properti dari tipe" yang digabungkan)
+        type Domain = HasId & HasName;
+
+
+        const domain: Domain  = {
+            id: "1",
+            name: "Dwi"
+        }
+
+        console.info(domain);
+    })
 })
