@@ -159,4 +159,38 @@ describe("zod", () => {
 
         console.info(result)
     })
+
+    //Custom Validation Message
+    it("should can validate object with message", async () => {
+
+        //untuk menggunakan validation message: cukup tambahkan di parameter saja
+        const loginSchema = z.object({
+            username: z.email("Username harus dalam format email"),
+            password: z.string().min(6, "Password minimal 6 karakter").max(20, "Password maximal 20 karakter")
+        })
+
+        //kalau validation nya gagal/invalid, error yang terlihat adalah dari validation message
+        const request = {
+            username: "made",
+            password: "112",
+        }
+
+        try {
+            const result = loginSchema.parse(request)
+            console.info(result)
+        } catch(e) {
+            console.error(e)
+        }
+    })
+
+    //Transform data
+    it("should support transform", async () => {
+        const schema = z.string().transform((data) => {
+            return data.toUpperCase().trim();
+        })
+
+        const result = schema.parse("   premayasa   ");
+
+        console.info(result)
+    })
 })
