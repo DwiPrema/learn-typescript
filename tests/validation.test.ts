@@ -193,4 +193,31 @@ describe("zod", () => {
 
         console.info(result)
     })
+
+    //Custom Validation
+    it("should can create custom validation", () => {
+        const loginSchema = z.object({
+            username: z.email().transform((data, ctx) => {
+                if(data != data.toUpperCase()) {
+
+                    //cara untuk membuat custom validation
+                    ctx.addIssue({
+                        code: "custom",
+                        message: "Username Harus UpperCase"
+                    })
+
+                    return z.NEVER
+                } else {
+                    return data
+                }
+            })
+        })
+
+        const request = {
+            username: "DWI@EXAMPLE.COM"
+        }
+
+        const result = loginSchema.parse(request)
+        console.info(result)
+    })
 })
