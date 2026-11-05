@@ -119,4 +119,44 @@ describe("zod", () => {
 
         console.info(result)
     })
+
+    it("should support array validation", async () => {
+
+        //Array Validation
+        const schema = z.array(
+            z.email()
+        ).min(1).max(10)
+
+        const request: Array<String> = ["made@example.com", "dwi@example.com", "dwi@example.com"]
+        const result = schema.parse(request)
+
+        console.info(result);
+    })
+
+    it("should can validate set", async () => {
+        const schema = z.set(
+            z.email()
+        ).min(1).max(10)
+
+        const request: Set<String> = new Set(["made@example.com", "dwi@example.com", "dwi@example.com"])
+        const result = schema.parse(request)
+
+        console.info(result);
+    })
+
+    it("should support map validation", async () => {
+        const schema = z.map(
+            z.string(),
+            z.email()
+        )
+
+        const request: Map<string, string> = new Map([
+            ["dwi", "dwi@example.com"],
+            ["made", "made@example.com"],
+        ])
+
+        const result: Map<string, string> = schema.parse(request)
+
+        console.info(result)
+    })
 })
