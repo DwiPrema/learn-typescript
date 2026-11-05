@@ -1,4 +1,4 @@
-import {z} from "zod";
+import {z, ZodError} from "zod";
 
 describe("zod", () => {
     it("should support validation", async () => {
@@ -56,5 +56,67 @@ describe("zod", () => {
 
         const birthDate2 = birthDateSchema.parse(new Date(1990, 0, 1));
         console.info(birthDate2);
+    })
+
+    it("should return zod error if invalid", async () => {
+        const schema = z.email().min(3).max(100)
+
+        try {
+            schema.parse("dw")
+        } catch (err) {
+            
+            if(err instanceof ZodError) {
+                err.issues.forEach((error) => {
+                    console.info(error.message)
+                })
+            }
+        }
+    })
+
+    it("should can validate object", async () => {
+        const loginSchema = z.object({
+            username: z.email(),
+            password: z.string().min(6).max(20)
+        });
+
+        const request = {
+            username: "madedwiprema08@gmail.com",
+            password: "dwipremayasa",
+            ignore: "ignore",
+            name: "Dwi Premayasa"
+        }
+
+        const result = loginSchema.parse(request)
+        console.info(result)
+    })
+
+    it("should support nested object", async () => {
+
+        //Nested Object Validation
+        const createUserSchema = z.object({
+            id: z.string().max(100),
+            name: z.string().max(100),
+            address: z.object({
+                street: z.string().max(100),
+                city: z.string().max(100),
+                zip: z.string().max(100),
+                country: z.string().max(100)
+            })
+        })
+
+        const request = {
+            id: "123",
+            name: "Dwi",
+            address: {
+                street: "Jalan Majapahit",
+                city: "Denpasar",
+                zip: "12321",
+                country: "Indonesia",
+            }
+        }
+
+        const result = createUserSchema.parse(request)
+
+        console.info(result)
     })
 })
